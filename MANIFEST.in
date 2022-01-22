@@ -1,0 +1,12 @@
+include LICENSE
+include README.md
+include CHANGES.rst
+
+exclude tox.ini
+exclude .docstr.yaml
+exclude .readthedocs.yaml
+exclude pyproject.toml
+recursive-exclude tests *
+recursive-exclude requirements *
+recursive-exclude docs *
+recursive-exclude result_images *
