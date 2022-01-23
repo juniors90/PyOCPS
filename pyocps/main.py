@@ -44,10 +44,10 @@ from .define_parameters import (
     NLoadLevel,
     Kp
 )
-from ocpsdn.cap_mvar_determine import cap_mvar_determine
-from ocpsdn.dlf import dlf
-from ocpsdn.pen_v import pen_v
-from ocpsdn.update_solutions import update_solutions
+from .cap_mvar_determine import cap_mvar_determine
+from .dlf import dlf
+from .pen_v import pen_v
+from .update_solutions import update_solutions
 
 # Main mfile should be run
 
