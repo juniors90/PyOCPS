@@ -1,13 +1,34 @@
-# Function of defining input parameters
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# This file is part of the
+# PyOCPS Project (https://github.com/juniors90/PyOCPS/).
+# Copyright (c) 2022, Ferreira Juan David
+# License: MIT
+# Full Text: https://github.com/juniors90/PyOCPS/blob/master/LICENSE
+
+# =============================================================================
+# DOCS
+# =============================================================================
+
+"""PyOCPS.
+Implementation of Optimal Capacitor Placement and Sizing
+in Distribution Networks using Python.
+"""
+
+# =============================================================================
+# IMPORTS
+# =============================================================================
+
+# Mudule of defining input parameters
 import numpy as np
 
 No_Cap_Type = 7  # Number of capacitor types
-Cap_MVar = 4 * np.array(
-    [0, 150, 300, 450, 600, 900, 1200]
-)  # MVar of capacitors
-Cap_Price = 4 * np.array(
-    [0, 750, 975, 1140, 1320, 1650, 2040]
-)  # Price of capacitors
+# arrays of definition
+arr1 = [0, 150, 300, 450, 600, 900, 1200]
+arr2 = [0, 750, 975, 1140, 1320, 1650, 2040]
+Cap_MVar = 4 * np.array(arr1)  # MVar of capacitors
+Cap_Price = 4 * np.array(arr2)  # Price of capacitors
 No_pop = 100  # Number of population
 Iter = 200  # Iteration number
 VLoadMax = 1.1  # Upper voltage bound

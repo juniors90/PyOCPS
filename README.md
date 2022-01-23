@@ -1,8 +1,1 @@
-# Migración de códogo matlab a Python
-
-
-run the following command
-
-```
-jupyter notebook --port=8889
-```
+# Migrate matlab code to Python languaje (Build)

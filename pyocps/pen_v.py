@@ -1,4 +1,4 @@
-import pandas as np
+import numpy as np
 
 # Function of penalizing infeasible solutions
 

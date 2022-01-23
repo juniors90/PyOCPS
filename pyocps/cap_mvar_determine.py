@@ -1,5 +1,25 @@
-# Function of allocating MVAr to the generated population
-from tkinter.tix import PopupMenu
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# This file is part of the
+# PyOCPS Project (https://github.com/juniors90/PyOCPS/).
+# Copyright (c) 2022, Ferreira Juan David
+# License: MIT
+# Full Text: https://github.com/juniors90/PyOCPS/blob/master/LICENSE
+
+# =============================================================================
+# DOCS
+# =============================================================================
+
+"""PyOCPS.
+Implementation of Optimal Capacitor Placement and Sizing
+in Distribution Networks using Python.
+"""
+
+# =============================================================================
+# IMPORTS
+# =============================================================================
+
 import numpy as np
 
 No_Cap_Type = 7  # Number of capacitor types
@@ -20,6 +40,9 @@ NBus = len(Loaddata) + 1  # Number of buses
 
 # Function of allocating MVAr to the generated population
 def cap_Mvar_determine(p):
+    """
+    Function of allocating MVAr to the generated population
+    """
     global Cap_MVar, NBus
     pop = np.array([])
     for i in range(1, np.size(p, axis=0)):
