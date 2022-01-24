@@ -1,1 +1,1 @@
-# Migrate matlab code to Python languaje (Build)
+# Migrate matlab code to Python language (Build)
