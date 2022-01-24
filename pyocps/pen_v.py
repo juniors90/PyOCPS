@@ -7,7 +7,7 @@ VLoadMin = 0.9  # Lower voltage bound
 PF = 5000  # Penalty factor
 
 
-def penv(Vbus):
+def pen_v(Vbus):
     global VLoadMax, VLoadMin, PF
     Penalty = np.array([])
     for i in range(1, np.size(Vbus, axis=0)):

@@ -28,7 +28,7 @@ p = ceil(rand(No_pop, NBus - 1) * No_Cap_Type); % % % Initial popoulation
 pop = Cap_Mvar_determine(p); % % % Allocation MVAr to the generated population
 
 for i = 1:size(p, 1)
-	pop(i, :) = Cap_Mvar_determine(p(i, :));
+    pop(i, :) = Cap_Mvar_determine(p(i, :));
     Load(:, 1) = LoadOffPeak - (pop(i, :))'; Load(:, 2) = LoadMedium - (pop(i, :))';
     Load(:, 3) = LoadPeak - (pop(i, :))';
     Total_Cap_Price = sum(Cap_Price((p(i, :))));
