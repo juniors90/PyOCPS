@@ -47,7 +47,8 @@ function [PLoss, Vbus, Isec] = DLF(Strdata, Loaddata)
         Ibus = conj(S_bus ./ (sqrt(3) * Vbus));
         NERROR = max(max(abs(Ibus - OldIbus)));
     end
-
+    # A = np.array([[2.,4.,6.,8.],[3., 5., 7., 9.]])
+    # B = 10*np.ones((2,4))
     %======================================================== =
     LossSec = 3 * abs(Isec).^2 .* (Rsec) / 1000;
     PLoss = sum(LossSec);

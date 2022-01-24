@@ -1,3 +1,25 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# This file is part of the
+# PyOCPS Project (https://github.com/juniors90/PyOCPS/).
+# Copyright (c) 2022, Ferreira Juan David
+# License: MIT
+# Full Text: https://github.com/juniors90/PyOCPS/blob/master/LICENSE
+
+# =============================================================================
+# DOCS
+# =============================================================================
+
+"""PyOCPS.
+Implementation of Optimal Capacitor Placement and Sizing
+in Distribution Networks using Python.
+"""
+
+# =============================================================================
+# IMPORTS
+# =============================================================================
+
 import numpy as np
 
 # Function of penalizing infeasible solutions
@@ -9,12 +31,12 @@ PF = 5000  # Penalty factor
 
 def pen_v(Vbus):
     global VLoadMax, VLoadMin, PF
-    Penalty = np.array([])
+    penalty = np.array([])
     for i in range(1, np.size(Vbus, axis=0)):
         if (Vbus[i - 1] > VLoadMax) or (Vbus[i - 1] < VLoadMin):
-            Penalty[i] = PF
+            penalty[i] = PF
         else:
-            Penalty[i] = 0
-    PenaltyVoltage = sum(Penalty)
+            penalty[i] = 0
+    PenaltyVoltage = sum(penalty)
 
     return PenaltyVoltage

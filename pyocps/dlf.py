@@ -11,8 +11,16 @@ import numpy as np
 
 def dlf(Strdata, Loaddata):
     """
-    Strdata->> 1-from/2-to/3-Length(km)/4-R(ohm/km)/5-X(ohm / km) / 6 - Imax(Amp) / 7 - Capacitor (kvar)
-    Loaddata->> 1-bus/2-P(kw)/3-Q(kw)
+    Strdata->> 1 - from/
+               2 - to/
+               3 - Length(km)/
+               4 - R(ohm/km)/
+               5 - X(ohm / km)/
+               6 - Imax(Amp)/
+               7 - Capacitor (kvar)
+    Loaddata->> 1 - bus/
+                2 - P(kw)/
+                3 - Q(kw)
     """
     PLoss = np.array([])
     Nsec = np.array(Strdata)[:, 0].size  # Number of sections (or to buses)
@@ -23,7 +31,7 @@ def dlf(Strdata, Loaddata):
     Sbus = np.zeros((Nsec, 1), float)
     Rsec = np.array(Strdata)[:, 3] * np.array(Strdata)[:, 2]
     Xsec = np.array(Strdata)[:, 4] * np.array(Strdata)[:, 2]
-    Zsec = np.vectorize(complex)(Rsec, Xsec)
+    Zsec = Rsec + 1j * Xsec
 
     # * ======================== Init Algorithm =============================== #
 
@@ -31,35 +39,24 @@ def dlf(Strdata, Loaddata):
     BI[0, 0] = 1
     BV = BI
     for k in range(1, Nsec - 1):
-        np.array(BI)[:, np.array(Strdata, int)[k, 2]] = np.array(BI)[
-            :, np.array(Strdata, int)[k, 1]
-        ]
+        np.array(BI)[:, np.array(Strdata, int)[k, 2]] = np.array(BI)[:, np.array(Strdata, int)[k, 1]]
         np.array(BI)[k, np.array(Strdata, int)[k, 2]] = 1
-        np.array(BV)[:, np.array(Strdata, int)[k, 2]] = np.array(BV)[
-            :, np.array(Strdata, int)[k, 1]
-        ]
-        np.array(BV, dtype="complex_")[k, np.array(Strdata, int)[k, 2]] = Zsec[
-            k - 1
-        ]
+        np.array(BV)[:, np.array(Strdata, int)[k, 2]] = np.array(BV)[:, np.array(Strdata, int)[k, 1]]
+        np.array(BV, dtype="complex_")[k, np.array(Strdata, int)[k, 2]] = Zsec[k - 1]
 
     BI[:, 0] = []
     BV[:, 0] = []
     BV = BV.transpose()
     Cbus[np.array(Strdata)[:, 2]] = np.array(Strdata)[:, 7] * 1000
-    Sbus[np.array(Loaddata)[:, 1]] = (
-        np.vectorize(complex)(
-            np.array(Loaddata)[:, 2], np.array(Loaddata)[:, 3]
-        )
-        * 1000
-    )
+    Sbus[np.array(Loaddata)[:, 1]] = (np.array(Loaddata)[:, 2] + 1j * np.array(Loaddata)[:, 3]) * 100
     Cbus[0, :] = []
     Sbus[0, :] = []
     Iter = 0
 
     NERROR = 1
     # for P constant
-    S_bus = np.vectorize(complex)(Sbus, -(Cbus * (Vbus / Vbase) ** 2))
-    Ibus = (S_bus / (np.sqrt(3) * Vbus)).conjugate()
+    S_bus = Sbus - 1j * (Cbus * (Vbus / Vbase)**2) # for P constan
+    Ibus = np.conj(S_bus / (np.sqrt(3) * Vbus))
 
     while (Iter < 100) and (NERROR > math.exp(-5)):
         Iter = Iter + 1
@@ -68,7 +65,7 @@ def dlf(Strdata, Loaddata):
         Isec = BI * Ibus
         Vbus = Vbase - VD
         # for P constant
-        S_bus = np.vectorize(complex)(Sbus, -(Cbus * (Vbus / Vbase) ** 2))
+        S_bus = Sbus - 1j * (Cbus * (Vbus / Vbase)**2) # for P constant
         Ibus = (S_bus / (np.sqrt(3) * Vbus)).conjugate()
         NERROR = max(max(abs(Ibus - OldIbus)))
 
@@ -78,4 +75,4 @@ def dlf(Strdata, Loaddata):
     PLoss = sum(LossSec)
     Vbus = abs(Vbus) / Vbase  # voltage of to buses
 
-    return [PLoss, Vbus, Isec]
+    return PLoss, Vbus, Isec
