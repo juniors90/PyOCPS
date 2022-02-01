@@ -23,16 +23,13 @@ in Distribution Networks using Python.
 # Function of allocating MVAr to the generated population
 import numpy as np
 
-from .define_parameters import Cap_MVar, NBus
-
 # Function of allocating MVAr to the generated population
-def cap_mvar_determine(p):
-    global Cap_MVar, NBus
-    pop = np.array([])
-    for i in range(1, np.size(p, axis=0) + 1):
-        pop_row = p[i - 1, :]
-        pop_row_MVar = np.zeros((1, NBus - 1), float)
-        for j in range(1, NBus):
-            pop_row_MVar[j - 1] = Cap_MVar[pop_row[j - 1]]
-        pop[i - 1, :] = pop_row_MVar
+def cap_mvar_determine(p, Cap_MVar, NBus):
+    pop = np.zeros((100,NBus-1), int)
+    for i in range(len(p)):
+        pop_row = p[i]
+        pop_row_MVar = np.zeros((1, NBus - 1), int)
+        for j in range(0,NBus-1):
+            pop_row_MVar[0,j] = Cap_MVar[pop_row[j]-1] 
+        pop[i, :] = pop_row_MVar[0]
     return pop

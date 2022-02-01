@@ -56,3 +56,30 @@ array([[0.2, 0.4, 0.6, 0.8],
        [0.3, 0.5, 0.7, 0.9]])
 >>>
 ```
+
+## rand
+
+- Uniformly distributed random numbers
+
+Syntax
+
+```m
+X = rand
+```
+
+### Description
+
+`X = rand` returns a single uniformly distributed random number in the interval `(0,1)`.
+
+in terms of python
+
+```python
+>>> import random
+>>> a = 0.0
+>>> b = 1.0
+>>> [a+(b-a) * random.random() for i in range(10)]
+>>> [a+(b-a) * random.random() for i in range(10)]
+[0.19608765041383325, 0.4775679507480528, 0.6144707320053053,
+0.583680501234098, 0.7423328087806593, 0.392135477139825, 0.6745791071325355,
+0.7064309580707314, 0.5447476270147292, 0.11138328222518479]
+```
